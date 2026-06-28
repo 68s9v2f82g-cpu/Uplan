@@ -1,0 +1,20 @@
+{
+  "name": "Uplan",
+  "short_name": "Uplan",
+  "description": "A Brown student planner for classes, homework, fitness, dining, and campus map planning.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#4e3629",
+  "theme_color": "#4e3629",
+  "icons": [
+    {
+      "src": "assets/uplan-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "education", "lifestyle"]
+}

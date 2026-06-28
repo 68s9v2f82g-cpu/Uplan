@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Uplan app icon</title>
+  <desc id="desc">A white U on a Brown University brown and red app icon.</desc>
+  <rect width="512" height="512" rx="112" fill="#4e3629"/>
+  <path d="M0 352 512 198v202c0 61.9-50.1 112-112 112H112C50.1 512 0 461.9 0 400Z" fill="#b3202a"/>
+  <path d="M149 132h74v158c0 24 11.9 47 33 47s33-23 33-47V132h74v162c0 75-42 123-107 123s-107-48-107-123Z" fill="#fff"/>
+  <circle cx="372" cy="150" r="22" fill="#fff"/>
+</svg>

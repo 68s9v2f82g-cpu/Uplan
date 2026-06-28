@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#4e3629" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Uplan" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Uplan</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/uplan-icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/uplan-icon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-label="Uplan student planner">
+        <img src="assets/campus-banner.png" alt="" />
+        <div class="hero-overlay">
+          <p>Brown University</p>
+          <h1>Uplan</h1>
+          <div class="hero-badges" aria-label="Planner highlights">
+            <span>Classes</span>
+            <span>Homework</span>
+            <span>Fitness</span>
+            <span>Map</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="top-grid" aria-label="Planner overview">
+        <article class="panel today-panel">
+          <div class="panel-title">
+            <span class="icon" aria-hidden="true">◷</span>
+            <div>
+              <p class="eyebrow" id="todayLabel">Today</p>
+              <h2>Next Up</h2>
+            </div>
+          </div>
+          <div id="nextUp" class="next-up"></div>
+        </article>
+
+        <article class="panel homework-panel">
+          <div class="panel-title">
+            <span class="icon" aria-hidden="true">✓</span>
+            <div>
+              <p class="eyebrow">Homework</p>
+              <h2>Due Soon</h2>
+            </div>
+          </div>
+          <div id="homeworkList" class="stack"></div>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel controls" aria-label="Planner controls">
+          <div class="tabs" role="tablist" aria-label="Add planner items">
+            <button class="tab-button active" type="button" data-tab="class">Class</button>
+            <button class="tab-button" type="button" data-tab="homework">Homework</button>
+            <button class="tab-button" type="button" data-tab="fitness">Fitness</button>
+          </div>
+
+          <form id="classForm" class="entry-form active" data-form="class">
+            <label>
+              Class
+              <input name="name" required placeholder="Course name or code" />
+            </label>
+            <label>
+              Location
+              <input name="location" list="brownLocations" placeholder="Sayles Hall" />
+            </label>
+            <div class="two-col">
+              <label>
+                Day
+                <select name="day" required></select>
+              </label>
+              <label>
+                Color
+                <select name="color">
+                  <option value="#8f1d21">Brown red</option>
+                  <option value="#236b5a">Green</option>
+                  <option value="#2f5f98">Blue</option>
+                  <option value="#8a5a14">Gold</option>
+                  <option value="#5c4a72">Violet</option>
+                </select>
+              </label>
+            </div>
+            <div class="two-col">
+              <label>
+                Starts
+                <input name="start" type="time" required value="10:00" />
+              </label>
+              <label>
+                Ends
+                <input name="end" type="time" required value="10:50" />
+              </label>
+            </div>
+            <button class="primary-button" type="submit">Add class</button>
+          </form>
+
+          <form id="homeworkForm" class="entry-form" data-form="homework">
+            <label>
+              Assignment
+              <input name="title" required placeholder="Problem set 2" />
+            </label>
+            <label>
+              Class
+              <select name="classId" required></select>
+            </label>
+            <div class="two-col">
+              <label>
+                Due date
+                <input name="dueDate" type="date" required />
+              </label>
+              <label>
+                Priority
+                <select name="priority">
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                </select>
+              </label>
+            </div>
+            <button class="primary-button" type="submit">Add homework</button>
+          </form>
+
+          <form id="gymForm" class="entry-form" data-form="fitness">
+            <div class="fitness-switch" role="tablist" aria-label="Fitness tools">
+              <button class="fitness-switch-button active" type="button" data-fitness-tab="gym">Gym</button>
+              <button class="fitness-switch-button" type="button" data-fitness-tab="nutrition">Nutrition</button>
+            </div>
+
+            <div class="fitness-panel active" data-fitness-panel="gym">
+              <label>
+                Workout
+                <input name="name" required placeholder="Strength training" />
+              </label>
+              <div class="two-col">
+                <label>
+                  Day
+                  <select name="day" required></select>
+                </label>
+                <label>
+                  Place
+                  <input name="location" placeholder="Nelson Fitness Center" />
+                </label>
+              </div>
+              <div class="two-col">
+                <label>
+                  Starts
+                  <input name="start" type="time" required value="17:30" />
+                </label>
+                <label>
+                  Ends
+                  <input name="end" type="time" required value="18:30" />
+                </label>
+              </div>
+              <button class="primary-button" type="submit">Add gym</button>
+            </div>
+
+            <div class="fitness-panel" data-fitness-panel="nutrition">
+              <div class="nutrition-intro">
+                <p class="eyebrow">Dining Menus</p>
+                <h3>Brown Dining</h3>
+              </div>
+              <div id="diningMenus" class="dining-menus"></div>
+              <label>
+                Nutrition note
+                <textarea name="nutritionNote" rows="4" placeholder="Meal ideas, protein goals, allergies, or foods to remember"></textarea>
+              </label>
+              <button id="saveNutritionNote" class="primary-button" type="button">Save note</button>
+            </div>
+          </form>
+        </aside>
+
+        <section class="schedule-area" aria-label="Calendar schedule">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Classes, homework, fitness</p>
+              <h2>Calendar</h2>
+            </div>
+            <div class="calendar-actions">
+              <button id="prevMonth" class="ghost-button icon-button" type="button" aria-label="Previous month">‹</button>
+              <button id="todayButton" class="ghost-button" type="button">Today</button>
+              <button id="nextMonth" class="ghost-button icon-button" type="button" aria-label="Next month">›</button>
+              <button id="resetDemo" class="ghost-button" type="button">Clear all</button>
+            </div>
+          </div>
+          <div class="calendar-shell">
+            <div>
+              <div id="calendarTitle" class="calendar-title"></div>
+              <div id="calendarGrid" class="calendar-grid"></div>
+            </div>
+            <aside id="selectedDayAgenda" class="selected-day-agenda"></aside>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel map-panel" aria-label="Brown campus class map">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Campus Map</p>
+            <h2>Where Your Classes Are</h2>
+          </div>
+          <div class="location-controls">
+            <label>
+              Starting point
+              <select id="currentLocation"></select>
+            </label>
+            <button id="useMyLocation" class="ghost-button" type="button">Use my location</button>
+          </div>
+        </div>
+        <div class="map-layout">
+          <div class="campus-map" id="campusMap" aria-label="Clickable map of Brown class locations">
+            <div class="map-neighborhood college-hill">College Hill</div>
+            <div class="map-neighborhood downtown">Providence</div>
+            <div class="map-road diagonal one"></div>
+            <div class="map-road diagonal two"></div>
+            <div class="map-street college" aria-label="College Street"></div>
+            <div class="map-street waterman" aria-label="Waterman Street"></div>
+            <div class="map-street thayer" aria-label="Thayer Street"></div>
+            <div class="map-street brook" aria-label="Brook Street"></div>
+            <div class="map-street george" aria-label="George Street"></div>
+            <div class="map-street prospect" aria-label="Prospect Street"></div>
+            <span class="map-label label-college">College St</span>
+            <span class="map-label label-waterman">Waterman St</span>
+            <span class="map-label label-george">George St</span>
+            <span class="map-label label-thayer">Thayer St</span>
+            <span class="map-label label-brook">Brook St</span>
+            <span class="map-label label-prospect">Prospect St</span>
+            <div class="map-green main-green">Main Green</div>
+            <div class="map-green lincoln-field">Lincoln Field</div>
+            <div id="mapBuildings"></div>
+            <div id="mapRoute" class="map-route"></div>
+            <div id="mapPins"></div>
+            <div id="currentPin" class="current-pin">You</div>
+          </div>
+          <aside id="mapDetails" class="map-details"></aside>
+        </div>
+      </section>
+
+      <section class="panel roster-panel" aria-label="Classes">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Course Load</p>
+            <h2>Your Classes</h2>
+          </div>
+        </div>
+        <div id="classRoster" class="roster"></div>
+      </section>
+
+      <datalist id="brownLocations"></datalist>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("sw.js");
+        });
+      }
+    </script>
+  </body>
+</html>
